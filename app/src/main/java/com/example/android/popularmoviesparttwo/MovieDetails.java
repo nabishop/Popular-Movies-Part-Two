@@ -3,6 +3,7 @@ package com.example.android.popularmoviesparttwo;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -12,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.style.StyleSpan;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -19,6 +21,7 @@ import android.widget.Toast;
 
 import com.example.android.popularmoviesparttwo.data.Contract;
 import com.example.android.popularmoviesparttwo.model.Review;
+import com.example.android.popularmoviesparttwo.model.Video;
 import com.example.android.popularmoviesparttwo.utils.LoadMovieExtras;
 import com.example.android.popularmoviesparttwo.utils.ReviewsAdapter;
 import com.squareup.picasso.Picasso;
@@ -49,6 +52,8 @@ public class MovieDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setUpUI(savedInstanceState);
         populateUI();
+
+        reviewsAdapter = new ReviewsAdapter();
         loadReviews();
     }
 
@@ -62,6 +67,21 @@ public class MovieDetails extends AppCompatActivity {
         date = intent.getStringExtra("date");
         poster = intent.getStringExtra("poster");
         rating = intent.getDoubleExtra("rating", 0.0);
+        Button trailer = findViewById(R.id.trailer_button);
+        trailer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                Video video = LoadMovieExtras.getFirstTrailer(id);
+                System.out.println(video);
+                if (video.getUrlLink() != null) {
+                    i.setData(Uri.parse(video.getUrlLink()));
+                    startActivity(i);
+                }
+                Toast.makeText(getBaseContext(), "No Trailer Available",
+                        Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     private void populateUI() {
@@ -107,10 +127,9 @@ public class MovieDetails extends AppCompatActivity {
                 });
             }
         });
-        if(reviewList==null){
+        if (reviewList == null) {
             reviews.start();
-        }
-        else{
+        } else {
             populateReviewRecyclerView();
         }
     }
@@ -123,7 +142,6 @@ public class MovieDetails extends AppCompatActivity {
             LinearLayoutManager layoutManager = new LinearLayoutManager(this);
             reviewRecyclerView.setLayoutManager(layoutManager);
             reviewRecyclerView.setHasFixedSize(true);
-            reviewsAdapter = new ReviewsAdapter();
             reviewsAdapter.setReviews(reviewList);
             reviewRecyclerView.setAdapter(reviewsAdapter);
             System.out.println("\nADAPTER: " + reviewRecyclerView.getAdapter() + "\n");

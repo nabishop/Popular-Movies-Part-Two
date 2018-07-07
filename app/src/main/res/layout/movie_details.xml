@@ -35,6 +35,7 @@
                 tools:text="MOVIE TITLE" />
 
             <LinearLayout
+                android:id="@+id/button_list"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -57,6 +58,7 @@
                     android:textColor="@color/white" />
 
                 <Button
+                    android:id="@+id/trailer_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@color/buttonColor"

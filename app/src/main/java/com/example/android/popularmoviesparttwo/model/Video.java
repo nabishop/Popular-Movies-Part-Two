@@ -46,8 +46,11 @@ public class Video implements Parcelable {
 
         @Override
         public Video[] newArray(int size) {
-
             return new Video[size];
         }
     };
+
+    public String getUrlLink() {
+        return urlLink;
+    }
 }

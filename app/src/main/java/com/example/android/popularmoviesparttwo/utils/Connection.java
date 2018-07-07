@@ -13,6 +13,7 @@ import java.nio.charset.Charset;
 
 public class Connection {
     protected static String urlMovieRequest(URL url) {
+        System.out.println("URL " + url.toString());
         try {
             String jsonResponse = null;
             InputStream inputStream = null;
@@ -24,6 +25,7 @@ public class Connection {
                 urlConnection.setRequestMethod("GET");
                 urlConnection.connect();
                 // 200 is good, 401 is unauthorized
+                System.out.println("RESPONSE CODE "+urlConnection.getResponseCode());
                 if (urlConnection.getResponseCode() == 200) {
                     System.out.println("CONNECTION WORKED");
                     inputStream = urlConnection.getInputStream();

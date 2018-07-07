@@ -52,6 +52,7 @@ public class LoadMovieExtras {
 
     public static Video getFirstTrailer(String movieId) {
         String jsonResponse = getVideoJsonResponse(movieId);
+        System.out.println("JSON RESPONSE "+jsonResponse);
         try {
             JSONObject jsonObject = new JSONObject(jsonResponse);
             if (jsonObject.has(RESULTS)) {
