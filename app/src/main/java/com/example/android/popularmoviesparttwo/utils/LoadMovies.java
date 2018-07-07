@@ -33,9 +33,9 @@ public class LoadMovies {
         if (sort != null) {
             switch (sort) {
                 case URLParsing.toprated:
-                    return loadMovies(sort.substring(0, sort.length() - 1));
+                    return loadMovies(sort);
                 case URLParsing.popular:
-                    return loadMovies(sort.substring(0, sort.length() - 1));
+                    return loadMovies(sort);
             }
         }
         return null;

@@ -18,7 +18,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".MovieDetails" />
+
+        <provider
+            android:name="com.example.android.popularmoviesparttwo.data.MovieContentProvider"
+            android:authorities="com.example.android.popularmoviesparttwo"
+            android:exported="false" />
+
     </application>
 
 </manifest>

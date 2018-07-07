@@ -1,6 +1,7 @@
 package com.example.android.popularmoviesparttwo;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,7 +10,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.SimpleCursorAdapter;
 
+import com.example.android.popularmoviesparttwo.data.Contract;
 import com.example.android.popularmoviesparttwo.model.Movie;
 import com.example.android.popularmoviesparttwo.utils.LoadMovies;
 import com.example.android.popularmoviesparttwo.utils.MovieAdapter;
@@ -56,10 +59,27 @@ public class MainActivity extends AppCompatActivity {
         int id = menuItem.getItemId();
         if (id == R.id.top_rated_menu) {
             new MovieASyncTask().execute(URLParsing.toprated);
-        } else {
+        } else if (id == R.id.popular_menu) {
             new MovieASyncTask().execute(URLParsing.popular);
+        } else {
+            favoritesMenuSelectedHelper();
         }
         return super.onOptionsItemSelected(menuItem);
+    }
+
+    private void favoritesMenuSelectedHelper() {
+        Cursor cursor = getContentResolver().query(Contract.MovieEntry.CONTENT_URI,
+                new String[]{Contract.MovieEntry._ID, Contract.MovieEntry.COLUMN_NAME},
+                null, null, null);
+        startManagingCursor(cursor);
+
+        String[] boundColumn = new String[]{Contract.MovieEntry.COLUMN_NAME};
+        int[] idData = new int[]{R.id.favorites_screen};
+        SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, R.layout.favorite_movies,
+                cursor, boundColumn, idData);
+
+        gridView.setAdapter(adapter);
+        helperOnItemClick();
     }
 
     private void helperOnItemClick() {

@@ -8,6 +8,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:adjustViewBounds="true"
-        android:contentDescription="poster"
-        android:scaleType="centerInside" />
+        android:contentDescription="@string/poster_iv_description"
+        android:scaleType="fitCenter" />
 </android.support.constraint.ConstraintLayout>

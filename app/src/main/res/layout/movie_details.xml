@@ -1,31 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/darkGray">
+    android:background="@color/lightBlue">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:background="@color/headingBlue"
+            android:orientation="horizontal"
+            android:paddingEnd="23dp"
+            android:paddingStart="23dp">
+
+            <TextView
+                android:id="@+id/movie_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingEnd="18dp"
+                android:paddingRight="18dp"
+                android:textColor="@color/white"
+                android:textSize="45sp"
+                tools:text="MOVIE TITLE" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight=".2"
+                android:orientation="vertical"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp">
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/buttonColor"
+                    android:gravity="center"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:shadowColor="@color/darkGray"
+                    android:text="@string/button_fav_text"
+                    android:textColor="@color/white"
+                    android:onClick="onClickAddFavorite"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/buttonColor"
+                    android:gravity="center"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:shadowColor="@color/darkGray"
+                    android:text="@string/trailer_button_text"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
+        </LinearLayout>
+
         <ImageView
             android:id="@+id/poster_iv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:contentDescription="poster image for movie"
+            android:layout_weight="1"
+            android:contentDescription="@string/poster_iv_description"
             android:scaleType="centerInside" />
-
-        <TextView
-            android:id="@+id/movie_tv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingBottom="10dp"
-            android:paddingLeft="23dp"
-            android:paddingRight="23dp"
-            android:textColor="@color/white"
-            android:textSize="45sp" />
 
         <TextView
             android:id="@+id/rating_tv"
@@ -33,9 +82,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
+            android:paddingBottom="10dp"
             android:textColor="@color/white"
             android:textSize="22sp"
-            android:paddingBottom="10dp"/>
+            tools:text="RATING 6.4" />
 
         <TextView
             android:id="@+id/date_tv"
@@ -43,9 +93,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
+            android:paddingBottom="30dp"
             android:textColor="@color/white"
             android:textSize="22sp"
-            android:paddingBottom="30dp"/>
+            tools:text="DATE 6-25-1998" />
 
         <TextView
             android:id="@+id/description_tv"
@@ -55,7 +106,8 @@
             android:paddingLeft="23dp"
             android:paddingRight="23dp"
             android:textColor="@color/white"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            tools:text="DESCRIPTION\ndskdjksjdksjkdjlkszjflkkhjsdlkjghkljsdhfkjghksjdhgkjhsdkjhgkjshdkjghskdjhgjkhsdkjghskdjhgkjh" />
     </LinearLayout>
 
 </ScrollView>
