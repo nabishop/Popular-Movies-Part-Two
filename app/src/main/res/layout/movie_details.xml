@@ -47,12 +47,12 @@
                     android:layout_marginBottom="10dp"
                     android:background="@color/buttonColor"
                     android:gravity="center"
+                    android:onClick="onClickAddFavorite"
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp"
                     android:shadowColor="@color/darkGray"
                     android:text="@string/button_fav_text"
-                    android:textColor="@color/white"
-                    android:onClick="onClickAddFavorite"/>
+                    android:textColor="@color/white" />
 
                 <Button
                     android:layout_width="wrap_content"
@@ -68,35 +68,52 @@
 
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/poster_iv"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:contentDescription="@string/poster_iv_description"
-            android:scaleType="centerInside" />
+            android:orientation="horizontal"
+            android:paddingRight="23dp"
+            android:paddingLeft="23dp"
+            android:layout_marginBottom="15dp">
 
-        <TextView
-            android:id="@+id/rating_tv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:paddingBottom="10dp"
-            android:textColor="@color/white"
-            android:textSize="22sp"
-            tools:text="RATING 6.4" />
+            <ImageView
+                android:id="@+id/poster_iv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:contentDescription="@string/poster_iv_description"
+                android:scaleType="centerInside" />
 
-        <TextView
-            android:id="@+id/date_tv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:paddingBottom="30dp"
-            android:textColor="@color/white"
-            android:textSize="22sp"
-            tools:text="DATE 6-25-1998" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/rating_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:paddingBottom="10dp"
+                    android:textColor="@color/white"
+                    android:textSize="22sp"
+                    tools:text="RATING 6.4" />
+
+                <TextView
+                    android:id="@+id/date_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:paddingBottom="30dp"
+                    android:textColor="@color/white"
+                    android:textSize="22sp"
+                    tools:text="DATE 6-25-1998" />
+            </LinearLayout>
+        </LinearLayout>
+
 
         <TextView
             android:id="@+id/description_tv"

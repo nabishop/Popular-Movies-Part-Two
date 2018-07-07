@@ -2,10 +2,13 @@ package com.example.android.popularmoviesparttwo;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.SpannableString;
+import android.text.style.StyleSpan;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ScrollView;
@@ -60,15 +63,17 @@ public class MovieDetails extends AppCompatActivity {
 
         // get rating into view
         TextView ratingTextView = findViewById(R.id.rating_tv);
-        ratingTextView.setText("Rating - " + String.valueOf(rating) + "/10");
+        ratingTextView.setText(String.valueOf(rating) + "/10");
 
         // get release date into view
         TextView dateTextView = findViewById(R.id.date_tv);
-        dateTextView.setText("Release Date - " + date);
+        dateTextView.setText(date);
 
         // get description text into view
         TextView descriptionTextView = findViewById(R.id.description_tv);
-        descriptionTextView.setText("Description\n" + description);
+        SpannableString spannableString = new SpannableString(description);
+        spannableString.setSpan(new StyleSpan(Typeface.ITALIC), 0, spannableString.length(), 0);
+        descriptionTextView.setText(spannableString);
     }
 
     public void onClickAddFavorite(View view) {
@@ -79,6 +84,7 @@ public class MovieDetails extends AppCompatActivity {
         contentValues.put(Contract.MovieEntry.COLUMN_OVERVIEW, description);
         contentValues.put(Contract.MovieEntry.COLUMN_RATING, rating);
         contentValues.put(Contract.MovieEntry.COLUMN_DATE, date);
+        System.out.println(contentValues);
         getContentResolver().insert(Contract.MovieEntry.CONTENT_URI, contentValues);
         Toast.makeText(this, "Added " + title + " to Favorites",
                 Toast.LENGTH_LONG).show();

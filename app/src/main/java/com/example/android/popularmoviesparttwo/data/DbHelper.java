@@ -18,20 +18,21 @@ import static com.example.android.popularmoviesparttwo.data.Contract.MovieEntry.
  */
 
 public class DbHelper extends SQLiteOpenHelper {
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     private static final String DATABASE_NAME = "movieList.db";
 
     public DbHelper(Context context) {
+
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        final String SQL_CREATE_MOVIE_TABLE = "CREATE TABLE " + TABLE_NAME
+        final String SQL_CREATE_MOVIE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME
                 + " (" + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + COLUMN_NAME + " TEXT NOT NULL, " + COLUMN_MOVIEID + " TEXT,"
-                + COLUMN_PICTURE + " TEXT," + COLUMN_OVERVIEW + " TEXT,"
-                + COLUMN_RATING + " TEXT," + COLUMN_DATE + " TEXT" + ")";
+                + COLUMN_NAME + " TEXT NOT NULL, " + COLUMN_MOVIEID + " TEXT, "
+                + COLUMN_PICTURE + " TEXT, " + COLUMN_OVERVIEW + " TEXT, "
+                + COLUMN_RATING + " TEXT, " + COLUMN_DATE + " TEXT " + ");";
         sqLiteDatabase.execSQL(SQL_CREATE_MOVIE_TABLE);
     }
 
