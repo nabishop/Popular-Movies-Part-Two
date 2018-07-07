@@ -12,4 +12,6 @@ public final class URLParsing {
     public static final String LOGIN = "5ff29a37294d985fda6354cb387c6ce2";
     public final static String popular = "popular";
     public final static String toprated = "top_rated";
+    public static final String REQUEST_VIDEOS = "videos";
+    public static final String REQUEST_REVIEWS = "reviews";
 }

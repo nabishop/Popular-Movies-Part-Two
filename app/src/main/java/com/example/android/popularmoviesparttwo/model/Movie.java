@@ -10,6 +10,7 @@ public class Movie implements Parcelable {
     private String overview;
     private String date;
     private double rating;
+    private boolean favorited = false;
 
     public Movie(String id, String title, String picture,
                  String overview, String date, double rating) {
