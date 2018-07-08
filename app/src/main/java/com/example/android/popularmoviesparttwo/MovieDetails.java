@@ -68,6 +68,9 @@ public class MovieDetails extends AppCompatActivity {
         date = intent.getStringExtra("date");
         poster = intent.getStringExtra("poster");
         rating = intent.getDoubleExtra("rating", 0.0);
+
+        MovieTrailerASyncTask trailerASyncTask = new MovieTrailerASyncTask();
+        trailerASyncTask.execute(id);
         Button trailer = findViewById(R.id.trailer_button);
         trailer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,9 +81,10 @@ public class MovieDetails extends AppCompatActivity {
                 if (video.getUrlLink() != null) {
                     i.setData(Uri.parse(video.getUrlLink()));
                     startActivity(i);
+                } else {
+                    Toast.makeText(getBaseContext(), "No Trailer Available",
+                            Toast.LENGTH_LONG).show();
                 }
-                Toast.makeText(getBaseContext(), "No Trailer Available",
-                        Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -186,5 +190,21 @@ public class MovieDetails extends AppCompatActivity {
             });
         }
         reviewList = savedInstanceState.getParcelableArrayList(SAVE_INSTANCE_REVIEWS);
+    }
+
+    private static class MovieTrailerASyncTask extends AsyncTask<String, Void, Video> {
+
+        @Override
+        protected Video doInBackground(String... strings) {
+            if (strings.length < 1 || strings[0] == null) {
+                return null;
+            }
+            return LoadMovieExtras.getFirstTrailer(strings[0]);
+        }
+
+        @Override
+        protected void onPostExecute(Video video) {
+            super.onPostExecute(video);
+        }
     }
 }
