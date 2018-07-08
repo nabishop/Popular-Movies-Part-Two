@@ -163,10 +163,6 @@ public class MovieDetails extends AppCompatActivity {
                 Toast.LENGTH_LONG).show();
     }
 
-    public void onClickTrailer(View view) {
-        Intent viewIntent = new Intent(Intent.ACTION_VIEW);
-    }
-
 
     @Override
     public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
