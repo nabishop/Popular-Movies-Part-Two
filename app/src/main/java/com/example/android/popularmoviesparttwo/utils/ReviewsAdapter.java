@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.example.android.popularmoviesparttwo.R;
 import com.example.android.popularmoviesparttwo.model.Review;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -51,6 +52,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter {
 
         public ReviewsViewHolder(View itemView) {
             super(itemView);
+            System.out.println("SETTING VIEW STUFF");
             user = itemView.findViewById(R.id.recycler_review_user);
             review = itemView.findViewById(R.id.recycler_review_comments);
         }
@@ -58,6 +60,11 @@ public class ReviewsAdapter extends RecyclerView.Adapter {
 
     public void setReviews(List<Review> reviews) {
         this.reviews = reviews;
+        notifyDataSetChanged();
+    }
+
+    public void clearReviews(){
+        this.reviews=new ArrayList<>();
         notifyDataSetChanged();
     }
 }

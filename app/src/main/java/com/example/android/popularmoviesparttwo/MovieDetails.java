@@ -53,6 +53,7 @@ public class MovieDetails extends AppCompatActivity {
         setUpUI(savedInstanceState);
         populateUI();
 
+        reviewList = new ArrayList<>();
         reviewsAdapter = new ReviewsAdapter();
         loadReviews();
     }
@@ -114,7 +115,7 @@ public class MovieDetails extends AppCompatActivity {
         System.out.println("LOADING REVIEWS\n\n");
         final MovieDetails activity = MovieDetails.this;
 
-        Thread reviews = new Thread(new Runnable() {
+        final Thread reviews = new Thread(new Runnable() {
             @Override
             public void run() {
                 reviewList = LoadMovieExtras.getMovieReviews(id);
@@ -135,16 +136,15 @@ public class MovieDetails extends AppCompatActivity {
     }
 
     private void populateReviewRecyclerView() {
-        System.out.println("REVIEW LIST IS NULL");
         if (reviewList != null) {
             System.out.println("POPULATING REVIEW LIST");
             reviewRecyclerView = findViewById(R.id.review_recyclerview);
             LinearLayoutManager layoutManager = new LinearLayoutManager(this);
             reviewRecyclerView.setLayoutManager(layoutManager);
             reviewRecyclerView.setHasFixedSize(true);
+            reviewsAdapter.clearReviews();
             reviewsAdapter.setReviews(reviewList);
             reviewRecyclerView.setAdapter(reviewsAdapter);
-            System.out.println("\nADAPTER: " + reviewRecyclerView.getAdapter() + "\n");
         }
     }
 

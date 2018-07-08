@@ -68,9 +68,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void favoritesMenuSelectedHelper() {
-        Cursor cursor = getContentResolver().query(Contract.MovieEntry.CONTENT_URI,
-                new String[]{Contract.MovieEntry._ID, Contract.MovieEntry.COLUMN_NAME},
-                null, null, null);
+        Cursor cursor = getContentResolver().query(Contract.MovieEntry.CONTENT_URI, null,
+                null, null, Contract.MovieEntry.COLUMN_MOVIEID);
         startManagingCursor(cursor);
 
         String[] boundColumn = new String[]{Contract.MovieEntry.COLUMN_NAME};

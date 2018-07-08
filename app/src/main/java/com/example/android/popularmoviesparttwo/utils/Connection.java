@@ -20,8 +20,6 @@ public class Connection {
             HttpURLConnection urlConnection = null;
             try {
                 urlConnection = (HttpURLConnection) url.openConnection();
-                urlConnection.setReadTimeout(15000);
-                urlConnection.setConnectTimeout(20000);
                 urlConnection.setRequestMethod("GET");
                 urlConnection.connect();
                 // 200 is good, 401 is unauthorized
