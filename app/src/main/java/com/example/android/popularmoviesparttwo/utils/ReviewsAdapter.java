@@ -43,7 +43,10 @@ public class ReviewsAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return reviews.size();
+        if (reviews != null) {
+            return reviews.size();
+        }
+        return 0;
     }
 
     public class ReviewsViewHolder extends RecyclerView.ViewHolder {
@@ -63,8 +66,8 @@ public class ReviewsAdapter extends RecyclerView.Adapter {
         notifyDataSetChanged();
     }
 
-    public void clearReviews(){
-        this.reviews=new ArrayList<>();
+    public void clearReviews() {
+        this.reviews = new ArrayList<>();
         notifyDataSetChanged();
     }
 }
