@@ -1,6 +1,7 @@
 package com.example.android.popularmoviesparttwo;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.Uri;
@@ -22,6 +23,7 @@ import android.widget.Toast;
 import com.example.android.popularmoviesparttwo.data.Contract;
 import com.example.android.popularmoviesparttwo.model.Review;
 import com.example.android.popularmoviesparttwo.model.Video;
+import com.example.android.popularmoviesparttwo.utils.Connection;
 import com.example.android.popularmoviesparttwo.utils.LoadMovieExtras;
 import com.example.android.popularmoviesparttwo.utils.ReviewsAdapter;
 import com.squareup.picasso.Picasso;
@@ -41,8 +43,6 @@ public class MovieDetails extends AppCompatActivity {
     private static double rating;
     private ScrollView scrollView;
     private static ArrayList<Review> reviewList;
-    private RecyclerView reviewRecyclerView;
-    private ReviewsAdapter reviewsAdapter;
 
     private static final String SAVE_INSTANCE_STRING = "SCROLL_LOCATION";
     private static final String SAVE_INSTANCE_REVIEWS = "reviewsListKey";
@@ -54,7 +54,6 @@ public class MovieDetails extends AppCompatActivity {
         populateUI();
 
         reviewList = new ArrayList<>();
-        reviewsAdapter = new ReviewsAdapter();
         loadReviews();
     }
 
@@ -117,41 +116,10 @@ public class MovieDetails extends AppCompatActivity {
 
     private void loadReviews() {
         System.out.println("LOADING REVIEWS\n\n");
-        final MovieDetails activity = MovieDetails.this;
+        MovieReviewASyncTask movieReviewASyncTask = new MovieReviewASyncTask(getBaseContext());
+        movieReviewASyncTask.execute(id);
 
-        final Thread reviews = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                reviewList = LoadMovieExtras.getMovieReviews(id);
-                System.out.println("\nREVIEW LIST " + reviewList);
-                activity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        populateReviewRecyclerView();
-                    }
-                });
-            }
-        });
-        if (reviewList == null) {
-            reviews.start();
-        } else {
-            populateReviewRecyclerView();
-        }
     }
-
-    private void populateReviewRecyclerView() {
-        if (reviewList != null) {
-            System.out.println("POPULATING REVIEW LIST");
-            reviewRecyclerView = findViewById(R.id.review_recyclerview);
-            LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-            reviewRecyclerView.setLayoutManager(layoutManager);
-            reviewRecyclerView.setHasFixedSize(true);
-            reviewsAdapter.clearReviews();
-            reviewsAdapter.setReviews(reviewList);
-            reviewRecyclerView.setAdapter(reviewsAdapter);
-        }
-    }
-
 
     public void onClickAddFavorite(View view) {
         ContentValues contentValues = new ContentValues();
@@ -205,6 +173,36 @@ public class MovieDetails extends AppCompatActivity {
         @Override
         protected void onPostExecute(Video video) {
             super.onPostExecute(video);
+        }
+    }
+
+    private class MovieReviewASyncTask extends AsyncTask<String, Void, ArrayList<Review>> {
+        private Context context;
+
+        public MovieReviewASyncTask(Context context) {
+            this.context = context;
+        }
+
+        @Override
+        protected ArrayList<Review> doInBackground(String... strings) {
+            if (strings.length < 1 || strings[0] == null) {
+                return null;
+            }
+            return LoadMovieExtras.getMovieReviews(id);
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Review> reviews) {
+            System.out.println("POPULATING REVIEW LIST");
+            RecyclerView reviewRecyclerView = findViewById(R.id.review_recyclerview);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(context);
+            reviewRecyclerView.setLayoutManager(layoutManager);
+            reviewRecyclerView.setHasFixedSize(true);
+            ReviewsAdapter reviewsAdapter = new ReviewsAdapter();
+            reviewsAdapter.clearReviews();
+            reviewsAdapter.setReviews(reviewList);
+            reviewRecyclerView.setAdapter(reviewsAdapter);
+            super.onPostExecute(reviews);
         }
     }
 }
