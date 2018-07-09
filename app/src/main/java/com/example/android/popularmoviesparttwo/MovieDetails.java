@@ -198,9 +198,7 @@ public class MovieDetails extends AppCompatActivity {
             LinearLayoutManager layoutManager = new LinearLayoutManager(context);
             reviewRecyclerView.setLayoutManager(layoutManager);
             reviewRecyclerView.setHasFixedSize(true);
-            ReviewsAdapter reviewsAdapter = new ReviewsAdapter();
-            reviewsAdapter.clearReviews();
-            reviewsAdapter.setReviews(reviewList);
+            ReviewsAdapter reviewsAdapter = new ReviewsAdapter(reviews);
             reviewRecyclerView.setAdapter(reviewsAdapter);
             super.onPostExecute(reviews);
         }

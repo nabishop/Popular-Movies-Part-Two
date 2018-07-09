@@ -18,12 +18,16 @@ import java.util.List;
  * Created by Nick on 7/7/2018.
  */
 
-public class ReviewsAdapter extends RecyclerView.Adapter {
+public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewsViewHolder> {
     private List<Review> reviews;
+
+    public ReviewsAdapter(List<Review> reviews) {
+        this.reviews = reviews;
+    }
 
     @NonNull
     @Override
-    public ReviewsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ReviewsAdapter.ReviewsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         int inflateLayoutId = R.layout.recyclerview_reviews;
         LayoutInflater inflater = LayoutInflater.from(context);
@@ -33,8 +37,8 @@ public class ReviewsAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        ReviewsViewHolder reviewsViewHolder = (ReviewsViewHolder) holder;
+    public void onBindViewHolder(@NonNull ReviewsAdapter.ReviewsViewHolder holder, int position) {
+        ReviewsViewHolder reviewsViewHolder = holder;
         Review review = reviews.get(position);
         System.out.println("USER: " + review.getUser() + "\nREVIEW: " + review.getReview() + "\n");
         reviewsViewHolder.user.setText(review.getUser());
