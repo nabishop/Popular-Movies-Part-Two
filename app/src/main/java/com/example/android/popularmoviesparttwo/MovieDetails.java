@@ -225,7 +225,7 @@ public class MovieDetails extends AppCompatActivity {
             ReviewsAdapter reviewsAdapter = new ReviewsAdapter(reviews);
             reviewRecyclerView.setAdapter(reviewsAdapter);
             if (reviews == null || reviews.size() == 0) {
-                Toast.makeText(context, "No Reviews Found for " + title, Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "No Reviews Found for " + title, Toast.LENGTH_SHORT).show();
                 return;
             }
             super.onPostExecute(reviews);

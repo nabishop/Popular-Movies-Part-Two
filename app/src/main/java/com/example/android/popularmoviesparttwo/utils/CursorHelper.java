@@ -25,7 +25,7 @@ public class CursorHelper {
         return new Movie(movieId, movieName, picture, overview, date, ratingConverted);
     }
 
-    public static List<Movie> queryAllFavouriteMoviesFromDb(Context context) {
+    public static ArrayList<Movie> queryAllFavouriteMoviesFromDb(Context context) {
         String[] columnsToRetrieve = {Contract.MovieEntry.COLUMN_NAME,
                 Contract.MovieEntry.COLUMN_MOVIEID,
                 Contract.MovieEntry.COLUMN_PICTURE,

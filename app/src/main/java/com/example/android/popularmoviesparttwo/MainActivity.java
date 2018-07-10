@@ -14,6 +14,7 @@ import android.widget.SimpleCursorAdapter;
 
 import com.example.android.popularmoviesparttwo.data.Contract;
 import com.example.android.popularmoviesparttwo.model.Movie;
+import com.example.android.popularmoviesparttwo.utils.CursorHelper;
 import com.example.android.popularmoviesparttwo.utils.LoadMovies;
 import com.example.android.popularmoviesparttwo.utils.MovieAdapter;
 import com.example.android.popularmoviesparttwo.utils.URLParsing;
@@ -68,13 +69,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void favoritesMenuSelectedHelper() {
-        Cursor movies = getContentResolver().query(Contract.MovieEntry.CONTENT_URI, null,
-                null, null, Contract.MovieEntry.COLUMN_MOVIEID);
-        startManagingCursor(movies);
-
         setContentView(R.layout.favorite_movies);
-        gridView=findViewById(R.id.favorites_screen);
-        ArrayList<Movie> favoritedMovies = new ArrayList<>();
+        gridView = findViewById(R.id.favorites_screen);
+        ArrayList<Movie> favoritedMovies = CursorHelper.queryAllFavouriteMoviesFromDb(this);
+        System.out.println("FAVORITED MOVIES: " + favoritedMovies);
         movieAdapter = new MovieAdapter(this, favoritedMovies);
         gridView.setAdapter(movieAdapter);
         helperOnItemClick();
