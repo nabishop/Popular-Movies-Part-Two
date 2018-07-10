@@ -9,12 +9,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.SimpleCursorAdapter;
 
 import com.example.android.popularmoviesparttwo.data.Contract;
 import com.example.android.popularmoviesparttwo.model.Movie;
 import com.example.android.popularmoviesparttwo.utils.CursorHelper;
+import com.example.android.popularmoviesparttwo.utils.FavoriteMovieAdapter;
 import com.example.android.popularmoviesparttwo.utils.LoadMovies;
 import com.example.android.popularmoviesparttwo.utils.MovieAdapter;
 import com.example.android.popularmoviesparttwo.utils.URLParsing;
@@ -25,7 +27,9 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     private static GridView gridView;
     private static ArrayList<Movie> movies;
+    private static ArrayList<Movie> favoritedMovies;
     private static MovieAdapter movieAdapter;
+    private static FavoriteMovieAdapter favoriteMovieAdapter;
     private static String title;
     private static double rating;
     private static String date;
@@ -59,8 +63,10 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         int id = menuItem.getItemId();
         if (id == R.id.top_rated_menu) {
+            gridView.setAdapter(movieAdapter);
             new MovieASyncTask().execute(URLParsing.toprated);
         } else if (id == R.id.popular_menu) {
+            gridView.setAdapter(movieAdapter);
             new MovieASyncTask().execute(URLParsing.popular);
         } else {
             favoritesMenuSelectedHelper();
@@ -71,11 +77,11 @@ public class MainActivity extends AppCompatActivity {
     private void favoritesMenuSelectedHelper() {
         setContentView(R.layout.favorite_movies);
         gridView = findViewById(R.id.favorites_screen);
-        ArrayList<Movie> favoritedMovies = CursorHelper.queryAllFavouriteMoviesFromDb(this);
+        favoritedMovies = CursorHelper.queryAllFavouriteMoviesFromDb(this);
         System.out.println("FAVORITED MOVIES: " + favoritedMovies);
-        movieAdapter = new MovieAdapter(this, favoritedMovies);
-        gridView.setAdapter(movieAdapter);
-        helperOnItemClick();
+        favoriteMovieAdapter = new FavoriteMovieAdapter(this, favoritedMovies);
+        gridView.setAdapter(favoriteMovieAdapter);
+        favoritesHelperOnClick();
     }
 
     private void helperOnItemClick() {
@@ -98,6 +104,38 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    private void favoritesHelperOnClick() {
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long i) {
+                Intent intent = new Intent(MainActivity.this, MovieDetails.class);
+                System.out.println("MOVIE NAME ACCESSING " + favoriteMovieAdapter.getItem(position).getTitle());
+                title = favoriteMovieAdapter.getItem(position).getTitle();
+                intent.putExtra("title", title);
+                rating = favoriteMovieAdapter.getItem(position).getRating();
+                intent.putExtra("rating", rating);
+                date = favoriteMovieAdapter.getItem(position).getDate();
+                intent.putExtra("date", date);
+                description = favoriteMovieAdapter.getItem(position).getOverview();
+                intent.putExtra("description", description);
+                poster = favoriteMovieAdapter.getItem(position).getPicture();
+                intent.putExtra("poster", poster);
+                id = favoriteMovieAdapter.getItem(position).getId();
+                intent.putExtra("id", id);
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void onClickUnfavorite(View view) {
+        Button b = (Button) view;
+        String buttonText = b.getText().toString();
+        buttonText = buttonText.substring(11, buttonText.length());
+        System.out.println("BUTTON TEXT " + buttonText);
+        String[] args = new String[]{buttonText};
+        getContentResolver().delete(Contract.MovieEntry.CONTENT_URI, Contract.MovieEntry.COLUMN_NAME + "=?", args);
     }
 
     @Override
