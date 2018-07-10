@@ -12,16 +12,5 @@
         android:contentDescription="@string/poster_iv_description"
         android:scaleType="fitCenter" />
 
-    <Button
-        android:onClick="onClickUnfavorite"
-        android:id="@+id/favorite_title"
-        android:layout_width="wrap_content"
-        android:layout_height="80dp"
-        android:gravity="center"
-        android:textSize="20sp"
-        android:shadowColor="@color/darkGray"
-        android:textColor="@color/white"
-        android:background="@color/buttonColor"/>
-
 
 </LinearLayout>

@@ -142,16 +142,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void onClickUnfavorite(View view) {
-        Button b = (Button) view;
-        String buttonText = b.getText().toString();
-        buttonText = buttonText.substring(11, buttonText.length());
-        buttonText = buttonText.toUpperCase();
-        System.out.println("BUTTON TEXT " + buttonText);
-        String[] args = new String[]{buttonText};
-        getContentResolver().delete(Contract.MovieEntry.CONTENT_URI, Contract.MovieEntry.COLUMN_NAME + "=?", args);
-    }
-
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         outState.putParcelableArrayList(MOVIE_LIST_LIFE_KEY, movies);
