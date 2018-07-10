@@ -142,7 +142,8 @@
             android:gravity="center"
             android:text="@string/details_reviews_text"
             android:textColor="@color/white"
-            android:textSize="30sp" />
+            android:textSize="34sp"
+            android:layout_marginBottom="15dp"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/review_recyclerview"

@@ -68,16 +68,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void favoritesMenuSelectedHelper() {
-        Cursor cursor = getContentResolver().query(Contract.MovieEntry.CONTENT_URI, null,
+        Cursor movies = getContentResolver().query(Contract.MovieEntry.CONTENT_URI, null,
                 null, null, Contract.MovieEntry.COLUMN_MOVIEID);
-        startManagingCursor(cursor);
+        startManagingCursor(movies);
 
-        String[] boundColumn = new String[]{Contract.MovieEntry.COLUMN_NAME};
-        int[] idData = new int[]{R.id.favorites_screen};
-        SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, R.layout.favorite_movies,
-                cursor, boundColumn, idData);
-
-        gridView.setAdapter(adapter);
+        setContentView(R.layout.favorite_movies);
+        gridView=findViewById(R.id.favorites_screen);
+        ArrayList<Movie> favoritedMovies = new ArrayList<>();
+        movieAdapter = new MovieAdapter(this, favoritedMovies);
+        gridView.setAdapter(movieAdapter);
         helperOnItemClick();
     }
 

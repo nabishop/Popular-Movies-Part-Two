@@ -1,8 +1,11 @@
 package com.example.android.popularmoviesparttwo;
 
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -21,14 +24,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.popularmoviesparttwo.data.Contract;
+import com.example.android.popularmoviesparttwo.data.MovieContentProvider;
+import com.example.android.popularmoviesparttwo.model.Movie;
 import com.example.android.popularmoviesparttwo.model.Review;
 import com.example.android.popularmoviesparttwo.model.Video;
-import com.example.android.popularmoviesparttwo.utils.Connection;
+import com.example.android.popularmoviesparttwo.utils.CursorHelper;
 import com.example.android.popularmoviesparttwo.utils.LoadMovieExtras;
 import com.example.android.popularmoviesparttwo.utils.ReviewsAdapter;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import static com.example.android.popularmoviesparttwo.data.Contract.MovieEntry.TABLE_NAME;
 
 /**
  * Created by Nick on 6/19/2018.
@@ -130,9 +138,25 @@ public class MovieDetails extends AppCompatActivity {
         contentValues.put(Contract.MovieEntry.COLUMN_RATING, rating);
         contentValues.put(Contract.MovieEntry.COLUMN_DATE, date);
         System.out.println(contentValues);
-        getContentResolver().insert(Contract.MovieEntry.CONTENT_URI, contentValues);
-        Toast.makeText(this, "Added " + title + " to Favorites",
-                Toast.LENGTH_LONG).show();
+        if (!isAlreadyInDatabase(id)) {
+            getContentResolver().insert(Contract.MovieEntry.CONTENT_URI, contentValues);
+            Toast.makeText(this, "Added " + title + " to Favorites",
+                    Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, title + " is already in Favorites", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private boolean isAlreadyInDatabase(String movieId) {
+        List<Movie> favoritedMovies = CursorHelper.queryAllFavouriteMoviesFromDb(this);
+        for (Movie favMovieEntry : favoritedMovies) {
+            if (favMovieEntry.getId().equals(movieId)) {
+                System.out.println("ALREADY IN DATABASE");
+                return true;
+            }
+        }
+        System.out.println("NOT IN DATABASE");
+        return false;
     }
 
 
@@ -200,6 +224,10 @@ public class MovieDetails extends AppCompatActivity {
             reviewRecyclerView.setHasFixedSize(true);
             ReviewsAdapter reviewsAdapter = new ReviewsAdapter(reviews);
             reviewRecyclerView.setAdapter(reviewsAdapter);
+            if (reviews == null || reviews.size() == 0) {
+                Toast.makeText(context, "No Reviews Found for " + title, Toast.LENGTH_LONG).show();
+                return;
+            }
             super.onPostExecute(reviews);
         }
     }

@@ -1,8 +1,11 @@
 package com.example.android.popularmoviesparttwo.utils;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableString;
+import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +44,10 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewsV
         ReviewsViewHolder reviewsViewHolder = holder;
         Review review = reviews.get(position);
         System.out.println("USER: " + review.getUser() + "\nREVIEW: " + review.getReview() + "\n");
-        reviewsViewHolder.user.setText(review.getUser());
+
+        SpannableString userBold = new SpannableString(review.getUser());
+        userBold.setSpan(new StyleSpan(Typeface.BOLD), 0, userBold.length(), 0);
+        reviewsViewHolder.user.setText(userBold);
         reviewsViewHolder.review.setText(review.getReview());
     }
 
@@ -63,15 +69,5 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewsV
             user = itemView.findViewById(R.id.recycler_review_user);
             review = itemView.findViewById(R.id.recycler_review_comments);
         }
-    }
-
-    public void setReviews(List<Review> reviews) {
-        this.reviews = reviews;
-        notifyDataSetChanged();
-    }
-
-    public void clearReviews() {
-        this.reviews = new ArrayList<>();
-        notifyDataSetChanged();
     }
 }

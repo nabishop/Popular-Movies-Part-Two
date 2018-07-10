@@ -71,7 +71,6 @@ public class MovieContentProvider extends ContentProvider {
         return retCursor;
     }
 
-    //TODO getType
     @Nullable
     @Override
     public String getType(@NonNull Uri uri) {
@@ -103,7 +102,6 @@ public class MovieContentProvider extends ContentProvider {
         return returnUri;
     }
 
-    // TODO fix?
     @Override
     public int delete(@NonNull Uri uri, @Nullable String selection, @Nullable String[] selectionArgs) {
         final SQLiteDatabase db = mDbHelper.getWritableDatabase();
@@ -149,5 +147,9 @@ public class MovieContentProvider extends ContentProvider {
 
         getContext().getContentResolver().notifyChange(uri, null);
         return retInt;
+    }
+
+    public DbHelper getDatabase(){
+        return mDbHelper;
     }
 }

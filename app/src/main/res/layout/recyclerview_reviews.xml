@@ -10,17 +10,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        tools:text="Billy Joe Bob"
-        android:textSize="20sp"
-        android:textColor="@color/white"/>
+        android:textColor="@color/white"
+        android:textSize="25sp"
+        tools:text="Billy Joe Bob" />
 
     <TextView
         android:id="@+id/recycler_review_comments"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="kshjdlkjslkdfjlkdxzjflkjlksdjfkljsdlkjflksjdlfjlskdjflkjsdlkjfljsdlkfjklsdjklfj"
+        android:layout_marginBottom="35dp"
         android:textColor="@color/white"
-        android:textSize="12sp"/>
+        android:textSize="18sp"
+        tools:text="kshjdlkjslkdfjlkdxzjflkjlksdjfkljsdlkjflksjdlfjlskdjflkjsdlkjfljsdlkfjklsdjklfj" />
 
 
 </LinearLayout>
