@@ -65,10 +65,14 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         int id = menuItem.getItemId();
         if (id == R.id.top_rated_menu) {
+            setContentView(R.layout.activity_main);
+            movieAdapter = new MovieAdapter(this, movies);
             gridView = findViewById(R.id.gridView);
             gridView.setAdapter(movieAdapter);
             new MovieASyncTask().execute(URLParsing.toprated);
         } else if (id == R.id.popular_menu) {
+            setContentView(R.layout.activity_main);
+            movieAdapter = new MovieAdapter(this, movies);
             gridView = findViewById(R.id.gridView);
             gridView.setAdapter(movieAdapter);
             new MovieASyncTask().execute(URLParsing.popular);
