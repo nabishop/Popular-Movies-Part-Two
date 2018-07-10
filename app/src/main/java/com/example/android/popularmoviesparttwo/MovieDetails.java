@@ -120,6 +120,11 @@ public class MovieDetails extends AppCompatActivity {
         SpannableString descItalics = new SpannableString(description);
         descItalics.setSpan(new StyleSpan(Typeface.ITALIC), 0, descItalics.length(), 0);
         descriptionTextView.setText(descItalics);
+
+        Button favorite = findViewById(R.id.favorite_button);
+        if (isAlreadyInDatabase(id)) {
+            favorite.setText("Unfavorite");
+        }
     }
 
     private void loadReviews() {
@@ -143,13 +148,13 @@ public class MovieDetails extends AppCompatActivity {
             Toast.makeText(this, "Added " + title + " to Favorites",
                     Toast.LENGTH_LONG).show();
         } else {
-            Toast.makeText(this, title + " is already in Favorites", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Deleted " + title + " from Favorites", Toast.LENGTH_LONG).show();
         }
     }
 
     private boolean isAlreadyInDatabase(String movieId) {
         List<Movie> favoritedMovies = CursorHelper.queryAllFavouriteMoviesFromDb(this);
-        if(favoritedMovies==null){
+        if (favoritedMovies == null) {
             return false;
         }
         for (Movie favMovieEntry : favoritedMovies) {

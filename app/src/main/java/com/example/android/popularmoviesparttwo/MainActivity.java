@@ -69,12 +69,14 @@ public class MainActivity extends AppCompatActivity {
             movieAdapter = new MovieAdapter(this, movies);
             gridView = findViewById(R.id.gridView);
             gridView.setAdapter(movieAdapter);
+            helperOnItemClick();
             new MovieASyncTask().execute(URLParsing.toprated);
         } else if (id == R.id.popular_menu) {
             setContentView(R.layout.activity_main);
             movieAdapter = new MovieAdapter(this, movies);
             gridView = findViewById(R.id.gridView);
             gridView.setAdapter(movieAdapter);
+            helperOnItemClick();
             new MovieASyncTask().execute(URLParsing.popular);
         } else {
             favoritesMenuSelectedHelper();
@@ -117,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void favoritesHelperOnClick() {
+        System.out.println("CLICKER CLICKED");
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long i) {
@@ -146,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
         buttonText = buttonText.toUpperCase();
         System.out.println("BUTTON TEXT " + buttonText);
         String[] args = new String[]{buttonText};
-        getContentResolver().delete(Contract.MovieEntry.CONTENT_URI, Contract.MovieEntry.COLUMN_NAME + " = ?", args);
+        getContentResolver().delete(Contract.MovieEntry.CONTENT_URI, Contract.MovieEntry.COLUMN_NAME + "=?", args);
     }
 
     @Override
