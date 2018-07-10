@@ -16,7 +16,7 @@
         android:onClick="onClickUnfavorite"
         android:id="@+id/favorite_title"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
         android:gravity="center"
         android:textSize="20sp"
         android:shadowColor="@color/darkGray"

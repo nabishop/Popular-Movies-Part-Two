@@ -2,6 +2,7 @@ package com.example.android.popularmoviesparttwo;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.SimpleCursorAdapter;
 
 import com.example.android.popularmoviesparttwo.data.Contract;
@@ -63,9 +65,11 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         int id = menuItem.getItemId();
         if (id == R.id.top_rated_menu) {
+            gridView = findViewById(R.id.gridView);
             gridView.setAdapter(movieAdapter);
             new MovieASyncTask().execute(URLParsing.toprated);
         } else if (id == R.id.popular_menu) {
+            gridView = findViewById(R.id.gridView);
             gridView.setAdapter(movieAdapter);
             new MovieASyncTask().execute(URLParsing.popular);
         } else {
@@ -79,9 +83,11 @@ public class MainActivity extends AppCompatActivity {
         gridView = findViewById(R.id.favorites_screen);
         favoritedMovies = CursorHelper.queryAllFavouriteMoviesFromDb(this);
         System.out.println("FAVORITED MOVIES: " + favoritedMovies);
-        favoriteMovieAdapter = new FavoriteMovieAdapter(this, favoritedMovies);
-        gridView.setAdapter(favoriteMovieAdapter);
-        favoritesHelperOnClick();
+        if (favoritedMovies != null) {
+            favoriteMovieAdapter = new FavoriteMovieAdapter(this, favoritedMovies);
+            gridView.setAdapter(favoriteMovieAdapter);
+            favoritesHelperOnClick();
+        }
     }
 
     private void helperOnItemClick() {
@@ -133,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
         Button b = (Button) view;
         String buttonText = b.getText().toString();
         buttonText = buttonText.substring(11, buttonText.length());
-        buttonText=buttonText.toUpperCase();
+        buttonText = buttonText.toUpperCase();
         System.out.println("BUTTON TEXT " + buttonText);
         String[] args = new String[]{buttonText};
         getContentResolver().delete(Contract.MovieEntry.CONTENT_URI, Contract.MovieEntry.COLUMN_NAME + " = ?", args);

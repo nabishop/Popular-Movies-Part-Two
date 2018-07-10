@@ -149,6 +149,9 @@ public class MovieDetails extends AppCompatActivity {
 
     private boolean isAlreadyInDatabase(String movieId) {
         List<Movie> favoritedMovies = CursorHelper.queryAllFavouriteMoviesFromDb(this);
+        if(favoritedMovies==null){
+            return false;
+        }
         for (Movie favMovieEntry : favoritedMovies) {
             if (favMovieEntry.getId().equals(movieId)) {
                 System.out.println("ALREADY IN DATABASE");
