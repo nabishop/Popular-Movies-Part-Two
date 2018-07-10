@@ -129,13 +129,14 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void onClickUnfavorite(View view) {
+    public void onClickUnfavorite(View view) {
         Button b = (Button) view;
         String buttonText = b.getText().toString();
         buttonText = buttonText.substring(11, buttonText.length());
+        buttonText=buttonText.toUpperCase();
         System.out.println("BUTTON TEXT " + buttonText);
         String[] args = new String[]{buttonText};
-        getContentResolver().delete(Contract.MovieEntry.CONTENT_URI, Contract.MovieEntry.COLUMN_NAME + "=?", args);
+        getContentResolver().delete(Contract.MovieEntry.CONTENT_URI, Contract.MovieEntry.COLUMN_NAME + " = ?", args);
     }
 
     @Override

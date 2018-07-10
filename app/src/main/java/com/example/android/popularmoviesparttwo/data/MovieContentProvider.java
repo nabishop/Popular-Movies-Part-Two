@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import static com.example.android.popularmoviesparttwo.data.Contract.MovieEntry.COLUMN_NAME;
 import static com.example.android.popularmoviesparttwo.data.Contract.MovieEntry.CONTENT_URI;
 import static com.example.android.popularmoviesparttwo.data.Contract.MovieEntry.TABLE_NAME;
 
@@ -111,6 +112,12 @@ public class MovieContentProvider extends ContentProvider {
         int retInt;
 
         switch (match) {
+            case MOVIE:
+                String movieName = uri.getLastPathSegment();
+                System.out.println("MOVIE NAME " + movieName);
+                retInt = db.delete(TABLE_NAME, selectionArgs[0],
+                        selectionArgs);
+                break;
             case MOVIE_ID:
                 String movieId = uri.getLastPathSegment();
                 retInt = db.delete(TABLE_NAME, "_id=?",
@@ -149,7 +156,7 @@ public class MovieContentProvider extends ContentProvider {
         return retInt;
     }
 
-    public DbHelper getDatabase(){
+    public DbHelper getDatabase() {
         return mDbHelper;
     }
 }
