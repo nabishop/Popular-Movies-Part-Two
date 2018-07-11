@@ -112,6 +112,9 @@ public class MovieContentProvider extends ContentProvider {
         int retInt;
 
         switch (match) {
+            case MOVIE:
+                retInt = db.delete(TABLE_NAME, selection, selectionArgs);
+                break;
             case MOVIE_ID:
                 String movieId = uri.getLastPathSegment();
                 retInt = db.delete(TABLE_NAME, "_id=?",
