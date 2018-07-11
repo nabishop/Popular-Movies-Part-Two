@@ -159,23 +159,30 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
+        System.out.println("SAVED");
         outState.putParcelableArrayList(MOVIE_LIST_LIFE_KEY, movies);
         super.onSaveInstanceState(outState);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        System.out.println("RESTORED");
         movies = savedInstanceState.getParcelableArrayList(MOVIE_LIST_LIFE_KEY);
         super.onRestoreInstanceState(savedInstanceState);
     }
 
     @Override
     protected void onStart() {
+        System.out.println("STARTED");
+        if (onFavorites) {
+            favoritesMenuSelectedHelper();
+        }
         super.onStart();
     }
 
     @Override
     protected void onStop() {
+        System.out.println("STOPPED");
         super.onStop();
     }
 
