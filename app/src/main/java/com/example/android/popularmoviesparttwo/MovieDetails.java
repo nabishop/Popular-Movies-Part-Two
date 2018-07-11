@@ -146,10 +146,14 @@ public class MovieDetails extends AppCompatActivity {
         System.out.println(contentValues);
         if (!isAlreadyInDatabase(id)) {
             getContentResolver().insert(Contract.MovieEntry.CONTENT_URI, contentValues);
+            Button button = (Button) view;
+            button.setText("Unfavorite");
             Toast.makeText(this, "Added " + title + " to Favorites",
                     Toast.LENGTH_LONG).show();
         } else {
             deleteMovieFromFavorites();
+            Button button = (Button) view;
+            button.setText("Favorite");
             Toast.makeText(this, "Deleted " + title + " from Favorites", Toast.LENGTH_LONG).show();
         }
     }
