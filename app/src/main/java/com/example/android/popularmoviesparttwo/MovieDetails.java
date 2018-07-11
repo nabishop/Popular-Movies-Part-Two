@@ -36,6 +36,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.android.popularmoviesparttwo.data.Contract.MovieEntry.CONTENT_URI;
 import static com.example.android.popularmoviesparttwo.data.Contract.MovieEntry.TABLE_NAME;
 
 /**
@@ -148,8 +149,13 @@ public class MovieDetails extends AppCompatActivity {
             Toast.makeText(this, "Added " + title + " to Favorites",
                     Toast.LENGTH_LONG).show();
         } else {
+            deleteMovieFromFavorites();
             Toast.makeText(this, "Deleted " + title + " from Favorites", Toast.LENGTH_LONG).show();
         }
+    }
+
+    private void deleteMovieFromFavorites() {
+        getContentResolver().delete(CONTENT_URI, Contract.MovieEntry.COLUMN_MOVIEID + "=?", new String[]{id});
     }
 
     private boolean isAlreadyInDatabase(String movieId) {
