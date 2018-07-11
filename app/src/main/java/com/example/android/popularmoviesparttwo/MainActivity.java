@@ -39,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
     private static String poster;
     private static String id;
     private static final String MOVIE_LIST_LIFE_KEY = "movieList";
+    private static boolean onFavorites = false;
+    private static boolean firstOpen = true;
 
 
     @Override
@@ -47,24 +49,33 @@ public class MainActivity extends AppCompatActivity {
             System.out.println("SAVED INSTANCE STATE " + savedInstanceState.toString() + "\n");
         }
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        gridView = findViewById(R.id.gridView);
-        if (savedInstanceState != null && savedInstanceState.containsKey(MOVIE_LIST_LIFE_KEY)) {
-            movies = savedInstanceState.getParcelableArrayList(MOVIE_LIST_LIFE_KEY);
+        if (!onFavorites) {
+            setContentView(R.layout.activity_main);
+            gridView = findViewById(R.id.gridView);
+            if (savedInstanceState != null && savedInstanceState.containsKey(MOVIE_LIST_LIFE_KEY)) {
+                movies = savedInstanceState.getParcelableArrayList(MOVIE_LIST_LIFE_KEY);
+            } else {
+                movies = new ArrayList<>();
+            }
+            movieAdapter = new MovieAdapter(this, movies);
+            gridView.setAdapter(movieAdapter);
+            helperOnItemClick();
+            // asynctask
+            if (firstOpen) {
+                new MovieASyncTask().execute(URLParsing.popular);
+            }
         } else {
-            movies = new ArrayList<>();
+            favoritedMovies = CursorHelper.queryAllFavouriteMoviesFromDb(this);
+            favoritesMenuSelectedHelper();
         }
-        movieAdapter = new MovieAdapter(this, movies);
-        gridView.setAdapter(movieAdapter);
-        helperOnItemClick();
-        // asynctask
-        new MovieASyncTask().execute(URLParsing.popular);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         int id = menuItem.getItemId();
         if (id == R.id.top_rated_menu) {
+            onFavorites = false;
+            firstOpen = false;
             setContentView(R.layout.activity_main);
             movieAdapter = new MovieAdapter(this, movies);
             gridView = findViewById(R.id.gridView);
@@ -72,6 +83,8 @@ public class MainActivity extends AppCompatActivity {
             helperOnItemClick();
             new MovieASyncTask().execute(URLParsing.toprated);
         } else if (id == R.id.popular_menu) {
+            onFavorites = false;
+            firstOpen = false;
             setContentView(R.layout.activity_main);
             movieAdapter = new MovieAdapter(this, movies);
             gridView = findViewById(R.id.gridView);
@@ -79,6 +92,8 @@ public class MainActivity extends AppCompatActivity {
             helperOnItemClick();
             new MovieASyncTask().execute(URLParsing.popular);
         } else {
+            onFavorites = true;
+            firstOpen = false;
             favoritesMenuSelectedHelper();
         }
         return super.onOptionsItemSelected(menuItem);
