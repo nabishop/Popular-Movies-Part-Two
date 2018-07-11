@@ -112,11 +112,6 @@ public class MovieContentProvider extends ContentProvider {
         int retInt;
 
         switch (match) {
-            case MOVIE:
-                System.out.println("MOVIE NAME " + selectionArgs[0]);
-                retInt = db.delete(TABLE_NAME, selectionArgs[0],
-                        selectionArgs);
-                break;
             case MOVIE_ID:
                 String movieId = uri.getLastPathSegment();
                 retInt = db.delete(TABLE_NAME, "_id=?",
